@@ -1,0 +1,9 @@
+1. Error Info: element type is invalid: expect a string but got an object
+	- 原因有可能是忘记export 
+
+2. Error Info: expected a component class, got [object Object]
+ 	- In React-Native, View takes the place of Div so better use View. Don't use <div>, use <View>
+
+3. Error Info: expected a component class, got [object Object]
+	- 
+

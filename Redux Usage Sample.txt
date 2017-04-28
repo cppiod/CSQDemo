@@ -1,0 +1,156 @@
+Redux Usage Sample - SignInScreen
+
+1.  create components folder
+    separate presentational and container components
+    - presentational components: in charge of display
+    - container components: in charge of action
+2.  create SignInScreen.js file
+    - only html elements and stylesheet
+    -------------code sample---------------------
+     const SignInScreen = (props) => (
+        <View style={styles.container}>
+            <View style={styles.formContainer}>
+                <Text style={styles.label}>User Name:</Text>
+                <TextInput style={styles.textbox}/>
+                <Text style={styles.label}>Password:</Text>
+                <TextInput
+                    style={styles.textbox}
+                    secureTextEntry={true}
+                 />
+                <TouchableOpacity  style={styles.actionButton} >
+                    <Text style={styles.actionButtonText}>Login</Text>
+                </TouchableOpacity>
+            </View>
+            <Text style={styles.externalLink}>Forgot Password</Text>
+        </View>
+    )
+	const styles = StyleSheet.create ({
+	    container:{
+	       ...
+	    },
+	...
+	})
+	--------------------------------------------
+3.  Add Redux paradigm
+	3.1 Install redux: npm i --save redux react-redux
+	3.2 create reducers folder and index.js file in the folder
+    	- in the index.js, create the state function like: 
+    	-------------code sample---------------------
+          import  { combineReducers } from 'redux'
+			function userName(state = '', action){
+			    switch (action.type){
+			    default:
+			        return state
+			    }
+			}
+
+			function password(state = '', action){
+			    switch (action.type){
+			    default:
+			        return state
+			    }
+			}
+
+			const CSQReducers = combineReducers({
+			    userName,
+			    password,
+			})
+
+			export default CSQReducers
+		---------------------------------------------
+	3.3 create actions folder and index.js file in the folder
+		- in the index.js, create functions to update the state
+		-------------code sample---------------------
+		export function updateUserName(userName){
+			return {
+				type: 'UPDATE_USERNAME',
+				userName,
+			}
+		}
+
+		export function updatePassword(password){
+			return {
+				type: 'UPDATE_PASSWORD',
+				password,
+			}
+		}
+		---------------------------------------------
+
+		- copy the action name in the above functions 'UPDATE_USERNAME', 'UPDATE_PASSWORD' and add them into the reducers index.js file
+		-------------code sample---------------------
+		...
+		function userName(state = '', action){
+			switch (action.type){
+			case 'UPDATE_USERNAME':
+				return action.name
+			default: 
+				return state
+			}
+		}
+
+		function password(state = '', action){
+			switch (action.type){
+			case 'UPDATE_PASSWORD':
+				return action.password
+			default: 
+				return state
+			}
+		}
+		...
+		------------------------------------------------
+
+4.  glue actions and reducers together
+	---------before using redux, the index.ios.js looks like--------
+	import React, { Component } from 'react'
+	import {
+	  AppRegistry,
+	} from 'react-native'
+
+	import SignInScreen from './components/SignInScreen' 
+
+	export default class CSQDemo extends Component {
+	  render() {
+	    return (
+	      <SignInScreen />
+	    );
+	  }
+	}
+
+	AppRegistry.registerComponent('CSQDemo', () => CSQDemo);
+	-----------------------------------------------------------------
+
+	After using redux, you need to add Provider and createStore, also import reducers you created. 
+	-----------After using redux, the code looks like-----------------
+
+	import React, { Component } from 'react'
+	import {
+	  AppRegistry,
+	} from 'react-native'
+
+	import { Provider } from 'react-redux'
+	import { createStore } from 'redux'
+
+	import SignInScreen from './components/SignInScreen' 
+	import CSQReducers from './reducers'
+
+	let store = createStore(CSQReducers)
+
+	export default class CSQDemo extends Component {
+	  render() {
+	    console.log('Redux state is : ' + store.getState())
+	    return (
+	      <Provider store={store}>
+	        <SignInScreen />
+	      </Provider>
+	    );
+	  }
+	}
+
+	AppRegistry.registerComponent('CSQDemo', () => CSQDemo);
+	-----------------------------------------------------------------
+
+
+5.  create container file SignInContainer.js
+
+
+

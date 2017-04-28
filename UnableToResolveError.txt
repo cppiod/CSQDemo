@@ -1,0 +1,11 @@
+Loading dependency graph, done.
+error: bundling: UnableToResolveError: Unable to resolve module `` from `/Users/cpp/devworkspace/ReactNative/CSQDemo/containers/SignInContainer.js`: Module does not exist in the module map or in these directories:
+  /Users/cpp/devworkspace/ReactNative/CSQDemo
+,   /Users/cpp
+
+This might be related to https://github.com/facebook/react-native/issues/4968
+To resolve try the following:
+  1. Clear watchman watches: `watchman watch-del-all`.
+  2. Delete the `node_modules` folder: `rm -rf node_modules && npm install`.
+  3. Reset packager cache: `rm -fr $TMPDIR/react-*` or `npm start --reset-cache`.
+    at p.catch.error (/Users/cpp/devworkspace/ReactNative/CSQDemo/node_modules/react-native/packager/src/node-haste/DependencyGraph/ResolutionRequest.js:366:19)
